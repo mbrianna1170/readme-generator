@@ -1,6 +1,9 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
+const util = require("util");
+
+const writeFileAsync = util.promisify(fs.writeFile);
 
 // TODO: Create an array of questions for user input
 const basicQuestions = () => {
@@ -20,6 +23,18 @@ const basicQuestions = () => {
             name: 'intallation',
             message: 'Please provide information on the installation process:'
         },
+        {
+            type: 'confirm',
+            name: 'confirmContributions',
+            message: 'Would you like to list any contributions?',
+            default: true
+          },
+          {
+            type: 'input',
+            name: 'contributions',
+            message: 'Provide the contributions here:',
+            when: ({ confirmContributions }) => confirmContributions
+          },
         {
             type: 'checkbox',
             name: 'license',
